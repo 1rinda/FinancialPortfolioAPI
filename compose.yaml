@@ -1,0 +1,12 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      ApiKey: ${PORTFOLIO_API_KEY:?Set PORTFOLIO_API_KEY to a secret of at least 32 characters}
+    volumes:
+      - portfolio-data:/data
+    restart: unless-stopped
+volumes:
+  portfolio-data:

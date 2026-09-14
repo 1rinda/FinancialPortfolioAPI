@@ -1,0 +1,250 @@
+{
+  "info": {
+    "name": "Financial Portfolio API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5080"
+    },
+    {
+      "key": "apiKey",
+      "value": ""
+    },
+    {
+      "key": "portfolioId",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": ""
+    },
+    {
+      "key": "symbol",
+      "value": "AAPL"
+    },
+    {
+      "key": "expectedVersion",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "List and filter portfolios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/portfolio",
+        "description": "List and filter portfolios"
+      }
+    },
+    {
+      "name": "Create an empty USD portfolio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/portfolio",
+        "description": "Create an empty USD portfolio",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo portfolio\",\n  \"clientId\": \"CL001\",\n  \"clientName\": \"Demo Client\",\n  \"riskProfile\": \"Moderate\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Read a portfolio without changing it",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/portfolio/{{id}}",
+        "description": "Read a portfolio without changing it"
+      }
+    },
+    {
+      "name": "Replace portfolio metadata with a version check",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/portfolio/{{id}}",
+        "description": "Replace portfolio metadata with a version check",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"expectedVersion\": 1,\n  \"name\": \"Updated portfolio\",\n  \"riskProfile\": \"Moderate\",\n  \"status\": \"Active\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Soft-delete an empty portfolio and retain history",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/portfolio/{{id}}?expectedVersion={{expectedVersion}}",
+        "description": "Soft-delete an empty portfolio and retain history"
+      }
+    },
+    {
+      "name": "Refresh fixed demonstration prices",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/portfolio/{{id}}/recalculate",
+        "description": "Refresh fixed demonstration prices",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"expectedVersion\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "List portfolio transactions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/transaction/portfolio/{{portfolioId}}",
+        "description": "List portfolio transactions"
+      }
+    },
+    {
+      "name": "Create pending transaction; identical reference and payload returns original",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/transaction/portfolio/{{portfolioId}}",
+        "description": "Create pending transaction; identical reference and payload returns original",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"Deposit\",\n  \"referenceNumber\": \"deposit-001\",\n  \"amount\": 10000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Read a transaction",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/transaction/{{id}}",
+        "description": "Read a transaction"
+      }
+    },
+    {
+      "name": "Advance transaction lifecycle; settlement applies balances atomically",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/transaction/{{id}}/status",
+        "description": "Advance transaction lifecycle; settlement applies balances atomically",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"expectedVersion\": 1,\n  \"status\": \"Executed\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Poll committed resource changes in sequence order",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/changes",
+        "description": "Poll committed resource changes in sequence order"
+      }
+    },
+    {
+      "name": "List fixed demo quotes, not live prices",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/prices",
+        "description": "List fixed demo quotes, not live prices"
+      }
+    },
+    {
+      "name": "List committed audit records",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/audit",
+        "description": "List committed audit records"
+      }
+    },
+    {
+      "name": "List recorded demo quote observations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/prices/{{symbol}}/history",
+        "description": "List recorded demo quote observations"
+      }
+    }
+  ]
+}

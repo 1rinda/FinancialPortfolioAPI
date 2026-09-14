@@ -1,0 +1,11 @@
+@page "/api-docs"
+@{ Layout = null; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>API explorer · Portfolio Lab</title><link rel="stylesheet" href="/css/tester.css"/><script src="/js/explorer.js" defer></script></head>
+<body><header><div class="wrap header-row"><div><span class="eyebrow">FINANCIAL PORTFOLIO API</span><h1>API explorer</h1><p>Send a request and inspect the response.</p></div><nav><a href="/">Portfolio tester</a><a href="/openapi.json">OpenAPI JSON</a><a href="/postman.json" download>Postman collection</a></nav></div></header>
+<main class="wrap"><form id="explorer" class="card" style="margin-top:28px">
+<label for="key">API key (kept in this page only)</label><input id="key" type="password" autocomplete="off" required />
+<label for="endpoint">Endpoint</label><select id="endpoint"></select><p id="description"></p>
+<label for="path">Request path (replace IDs and version values)</label><input id="path" required />
+<label for="body">JSON request body</label><textarea id="body" rows="12" spellcheck="false"></textarea>
+<button id="send">Send request</button><p id="result-status" role="status" aria-live="polite"></p>
+</form><section class="card response-panel"><h2>Response</h2><pre id="result"></pre></section></main></body></html>

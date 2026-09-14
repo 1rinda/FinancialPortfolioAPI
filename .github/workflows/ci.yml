@@ -1,0 +1,23 @@
+name: Build and verify
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore, build, integration tests and publish
+        shell: pwsh
+        run: ./scripts/verify.ps1
+      - name: Build container
+        if: runner.os == 'Linux'
+        run: docker build -t financial-portfolio-api .
