@@ -68,7 +68,7 @@ To include SQL Server integration, set `PORTFOLIO_TEST_SQLSERVER` to a dedicated
 
 Startup key error: use the local script or supply a sufficiently long `ApiKey`. Database startup error: check provider, connection string, parent-directory permissions and migrations. HTTP 401: paste the key for the running process. HTTP 409: retrieve the current version and check funds, shares and transaction status. Docker connection error: start Docker Desktop/Engine and confirm `docker info`. All unexpected request errors are logged with a trace ID; clients receive generic problem details.
 
-CI runs on Windows and Linux; Linux additionally builds the container. Server provisioning, DNS and public HTTPS deployment require an actual deployment target and are outside the local setup.
+CI is configured for Windows and Linux; Linux additionally builds the container and tests startup and persistence across restart. You can run the same container check locally with `docker build -t financial-portfolio-api:local .` followed by `./scripts/container-smoke.ps1`. It removes its own temporary container and volume after the check. Server provisioning, DNS and public HTTPS deployment require an actual deployment target and are outside the local setup.
 
 ## Optional browser check
 

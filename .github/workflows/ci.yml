@@ -21,3 +21,7 @@ jobs:
       - name: Build container
         if: runner.os == 'Linux'
         run: docker build -t financial-portfolio-api .
+      - name: Verify container and persistence
+        if: runner.os == 'Linux'
+        shell: pwsh
+        run: ./scripts/container-smoke.ps1 -Image financial-portfolio-api

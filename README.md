@@ -22,7 +22,7 @@ Dependencies restore automatically. EF Core migrations create the database on st
 
 This restores the EF tool, builds Release, runs executable regression and real HTTP integration checks, and publishes to `artifacts/publish`. GitHub Actions runs verification on Windows and Linux and builds the Linux container.
 
-[Integration and deployment guide](docs/api-documentation.md) | [Operations and architecture](docs/operations.md) | [OpenAPI](src/FinancialPortfolioAPI.API/docs/openapi.json) | [Postman collection](src/FinancialPortfolioAPI.API/docs/postman.json)
+[Integration and deployment guide](docs/api-documentation.md) | [Operations and architecture](docs/operations.md) | [Validation record](docs/validation.md) | [OpenAPI](src/FinancialPortfolioAPI.API/docs/openapi.json) | [Postman collection](src/FinancialPortfolioAPI.API/docs/postman.json)
 
 ## Docker
 
